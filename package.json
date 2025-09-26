@@ -9,7 +9,10 @@
     "start:dev": "nest start --watch",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
-    "db:seed": "npx ts-node prisma/seed.ts"
+    "db:seed": "npx ts-node prisma/seed.ts",
+    "start:prod": "node dist/main.js",
+
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.0.0",

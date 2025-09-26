@@ -6,77 +6,13 @@ export declare class OrdersService {
     private prisma;
     private queueService;
     constructor(prisma: PrismaService, queueService: QueueService);
-    create(createOrderDto: CreateOrderDto): Promise<{
-        user: {
-            id: string;
-            email: string;
-            name: string;
-            createdAt: Date;
-            updatedAt: Date;
-        };
-        orderItems: ({
-            product: {
-                id: string;
-                name: string;
-                createdAt: Date;
-                updatedAt: Date;
-                description: string;
-                price: number;
-                stock: number;
-            };
-        } & {
-            id: string;
-            price: number;
-            quantity: number;
-            productId: string;
-            orderId: string;
-        })[];
-    } & {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        totalAmount: number;
-        userId: string;
-    }>;
+    create(createOrderDto: CreateOrderDto): Promise<any>;
     findAll(query: GetOrdersDto): Promise<{
-        data: ({
-            user: {
-                id: string;
-                email: string;
-                name: string;
-                createdAt: Date;
-                updatedAt: Date;
-            };
-            orderItems: ({
-                product: {
-                    id: string;
-                    name: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    description: string;
-                    price: number;
-                    stock: number;
-                };
-            } & {
-                id: string;
-                price: number;
-                quantity: number;
-                productId: string;
-                orderId: string;
-            })[];
-        } & {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            totalAmount: number;
-            userId: string;
-        })[];
+        data: any;
         meta: {
             page: number;
             limit: number;
-            total: number;
+            total: any;
             totalPages: number;
         };
     }>;
