@@ -24,8 +24,27 @@ async function runMigrations() {
         throw error;
     }
 }
+async function runSeed() {
+    try {
+        console.log('Seeding database...');
+        const { stdout, stderr } = await execAsync('npx prisma db seed', {
+            cwd: process.cwd(),
+        });
+        if (stdout)
+            console.log('Seed output:', stdout);
+        if (stderr && !stderr.includes('Environment variables loaded')) {
+            console.error('Seed stderr:', stderr);
+        }
+        console.log('✅ Seeding completed successfully');
+    }
+    catch (error) {
+        console.error('❌ Seeding failed:', error);
+        throw error;
+    }
+}
 async function bootstrap() {
     await runMigrations();
+    await runSeed();
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.useGlobalPipes(new common_1.ValidationPipe());
     app.enableCors();
