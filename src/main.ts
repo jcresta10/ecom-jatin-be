@@ -1,8 +1,34 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
+
+async function runMigrations() {
+  try {
+    console.log('Running Prisma migrations...');
+    const { stdout, stderr } = await execAsync('npx prisma migrate deploy', {
+      cwd: process.cwd()
+    });
+    
+    if (stdout) console.log('Migration output:', stdout);
+    if (stderr && !stderr.includes('Environment variables loaded')) {
+      console.error('Migration stderr:', stderr);
+    }
+    
+    console.log('✅ Migrations completed successfully');
+  } catch (error) {
+    console.error('❌ Migration failed:', error);
+    throw error; // Prevent app startup if migrations fail
+  }
+}
 
 async function bootstrap() {
+  // Run migrations before starting the application
+  await runMigrations();
+  
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
