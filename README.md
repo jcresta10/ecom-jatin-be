@@ -105,3 +105,35 @@ https://jatin-ecom-fe.vercel.app/
 ```
 https://ecom-jatin-be-production.up.railway.app/
 ```
+
+# Shortcuts while deploying
+
+```
+1. Connect your github to railway.
+2. Push your BE code to Repository.
+3. Import your repository to railway.
+4. Create postgres and redis database in railway and update the env to use the PUBLIC_URL in nest deployed application
+5. Deploy your BE project.
+```
+
+# Included and working as per specification
+
+```
+1.Define a database schema that includes `User`, `Product`, `Order`, and `OrderItem` models.
+2. Implement a `POST /orders` endpoint for creating new orders transactionally.
+3. Implement a `GET /orders` endpoint with pagination and optional search functionality.
+4. Integrate Redis caching for the `GET /orders` endpoint with a 30-second TTL (Time-To-Live) and ensure that the cache is invalidated when a new order is created.
+5. Implement a mock queue (using SQS or Redis) to confirm orders asynchronously.
+
+
+# Deployment
+1. Deploy the frontend application on Vercel.
+2. Deploy the backend application on Railway
+3. Live links to both the deployed frontend and backend applications
+
+Developer Experience (DX)
+1. Include a `README.md` file in your GitHub repository with the following information:
+2. Setup instructions for running the application locally (Docker Compose is optional for local setup).
+3. The URLs to your deployed frontend and backend applications.
+4. A brief overview of any trade-offs or shortcuts you made during the development process.
+```
