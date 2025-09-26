@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
 import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-ioredis-yet';
 
 @Module({
   imports: [
-    CacheModule.register({
-      ttl: 30000, // milliseconds (30 seconds)
-      max: 100, // maximum number of items in cache
+    CacheModule.registerAsync({
+      useFactory: async () => ({
+        store: await redisStore({
+          host: process.env.REDIS_HOST || 'localhost',
+          ttl: 30, // <-- seconds (belongs inside redisStore config)
+        }),
+      }),
     }),
   ],
   exports: [CacheModule],

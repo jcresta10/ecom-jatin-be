@@ -18,11 +18,16 @@ export class OrdersController {
     const order = await this.ordersService.create(createOrderDto);
     
     // Invalidate cache when new order is created
-    const keys = await this.cacheManager.store.keys();
-    const orderKeys = keys.filter(key => key.startsWith('orders:'));
-    for (const key of orderKeys) {
-      await this.cacheManager.del(key);
+     const store: any = this.cacheManager.store;
+  const redis = store.getClient ? store.getClient() : store.client; // support both
+  if (redis) {
+    const keys = await redis.keys('orders:*');
+    if (keys.length > 0) {
+      await redis.del(keys);
     }
+  } else {
+    console.warn('⚠️ No raw Redis client found on cacheManager.store');
+  }
     
     return order;
   }
@@ -42,7 +47,7 @@ export class OrdersController {
     const result = await this.ordersService.findAll(query);
     
     // Store in cache with 30 second TTL
-    await this.cacheManager.set(cacheKey, result, 30000);
+    await this.cacheManager.set(cacheKey, result, 30);
     
     return result;
   }
