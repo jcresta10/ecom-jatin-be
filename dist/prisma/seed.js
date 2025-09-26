@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 async function main() {
+    console.log('Starting database seeding...');
     const user1 = await prisma.user.upsert({
         where: { email: 'user1@example.com' },
         update: {},
@@ -54,11 +55,14 @@ async function main() {
             stock: 30,
         },
     });
-    console.log('Seed data created successfully');
+    console.log('✅ Seed data created successfully');
 }
 main()
+    .then(() => {
+    console.log('Database seeding completed!');
+})
     .catch((e) => {
-    console.error(e);
+    console.error('❌ Database seeding failed:', e);
     process.exit(1);
 })
     .finally(async () => {

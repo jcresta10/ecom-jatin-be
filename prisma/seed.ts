@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log('Starting database seeding...');
   // Create users
   const user1 = await prisma.user.upsert({
     where: { email: 'user1@example.com' },
@@ -61,12 +62,15 @@ async function main() {
     },
   });
 
-  console.log('Seed data created successfully');
+  console.log('✅ Seed data created successfully');
 }
 
 main()
+  .then(() => {
+    console.log('Database seeding completed!');
+  })
   .catch((e) => {
-    console.error(e);
+    console.error('❌ Database seeding failed:', e);
     process.exit(1);
   })
   .finally(async () => {
