@@ -9,68 +9,68 @@ export declare class OrdersService {
     create(createOrderDto: CreateOrderDto): Promise<{
         user: {
             id: string;
+            email: string;
+            name: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
-            email: string;
         };
         orderItems: ({
             product: {
                 id: string;
+                name: string;
                 createdAt: Date;
                 updatedAt: Date;
-                price: number;
-                name: string;
                 description: string;
+                price: number;
                 stock: number;
             };
         } & {
             id: string;
-            quantity: number;
             price: number;
+            quantity: number;
             productId: string;
             orderId: string;
         })[];
     } & {
         id: string;
-        status: import(".prisma/client").$Enums.OrderStatus;
-        totalAmount: number;
         createdAt: Date;
         updatedAt: Date;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        totalAmount: number;
         userId: string;
     }>;
     findAll(query: GetOrdersDto): Promise<{
         data: ({
             user: {
                 id: string;
+                email: string;
+                name: string;
                 createdAt: Date;
                 updatedAt: Date;
-                name: string;
-                email: string;
             };
             orderItems: ({
                 product: {
                     id: string;
+                    name: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    price: number;
-                    name: string;
                     description: string;
+                    price: number;
                     stock: number;
                 };
             } & {
                 id: string;
-                quantity: number;
                 price: number;
+                quantity: number;
                 productId: string;
                 orderId: string;
             })[];
         } & {
             id: string;
-            status: import(".prisma/client").$Enums.OrderStatus;
-            totalAmount: number;
             createdAt: Date;
             updatedAt: Date;
+            status: import(".prisma/client").$Enums.OrderStatus;
+            totalAmount: number;
             userId: string;
         })[];
         meta: {
